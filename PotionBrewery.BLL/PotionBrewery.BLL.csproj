@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PotionBrewery.DAL\PotionBrewery.DAL.csproj" />
+    <ProjectReference Include="..\PotionBrewery.Models\PotionBrewery.Models.csproj" />
+  </ItemGroup>
+
 </Project>
