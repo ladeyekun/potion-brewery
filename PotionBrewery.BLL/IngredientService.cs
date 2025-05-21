@@ -1,4 +1,5 @@
-﻿using PotionBrewery.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using PotionBrewery.DAL;
 using PotionBrewery.Models;
 
 namespace PotionBrewery.BLL {
@@ -36,6 +37,10 @@ namespace PotionBrewery.BLL {
         public async Task<int> GetLowStockCount() {
             List<Ingredient> ingredients = await _repository.GetIngredients();
             return ingredients.Count(i => i.StockQuantity < i.MinThreshold);
+        }
+
+        public async Task<List<Ingredient>> GetMostUsedIngredients() {
+            return await _repository.GetMostUsedIngredients();
         }
     }
 }

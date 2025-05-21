@@ -49,5 +49,31 @@ namespace PotionBrewery.DAL {
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<MostBrewedPotionDTO>> GetMostFrequentlyBrewedPotions() {
+            return await _context.BrewedPotions
+                .Include(bp => bp.Recipe)
+                .GroupBy(bp => bp.Recipe)
+                .Select(g => new MostBrewedPotionDTO {
+                    Recipe = g.Key,
+                    Count = g.Count()
+                })
+                .OrderByDescending(x => x.Count)
+                .Take(5)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetTotalIngredientsUsed() {
+            var brewedPotion =  await _context.BrewedPotions
+                .Include(bp => bp.Recipe)
+                .ThenInclude(r => r.RecipeIngredients)
+                .ToListAsync();
+
+            return brewedPotion.Sum(p => p.Recipe.RecipeIngredients.Sum(ri => ri.QuantityRequired));
+        }
+        public async Task<int> GetTotalPotionsBrewed() {
+            return await _context.BrewedPotions.CountAsync();
+        }
+
     }
 }

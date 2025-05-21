@@ -20,7 +20,7 @@ namespace Potion_Brewery
 
             //ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
-
+            
             var services = new ServiceCollection();
             services.AddDbContext<PotionBreweryDbContext>(); // Registers DbContext with DI
             services.AddScoped<Form1>();
@@ -46,6 +46,7 @@ namespace Potion_Brewery
 
             var mainForm = ServiceProvider.GetRequiredService<Form1>();
             Application.Run(mainForm);
+            
 
         }
 

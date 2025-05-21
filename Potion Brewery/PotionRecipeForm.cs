@@ -16,11 +16,12 @@ namespace Potion_Brewery {
         private readonly PotionRecipeService _recipeService;
         private readonly IngredientService _ingredientService;
         private readonly IServiceProvider _serviceProvider;
-        public PotionRecipeForm(PotionRecipeService recipeService, IngredientService ingredientService, IServiceProvider serviceProvider) {
+        //public PotionRecipeForm(PotionRecipeService recipeService, IngredientService ingredientService, IServiceProvider serviceProvider) {
+        public PotionRecipeForm(PotionRecipeService recipeService, IngredientService ingredientService) {
             InitializeComponent();
             _recipeService = recipeService;
             _ingredientService = ingredientService;
-            _serviceProvider = serviceProvider;
+            //_serviceProvider = serviceProvider;
         }
 
         private async void PotionRecipeForm_Load(object sender, EventArgs e) {
@@ -40,15 +41,8 @@ namespace Potion_Brewery {
         }
 
         private void AddRecipeBtn_Click(object sender, EventArgs e) {
-            /*
-            var recipeEditorForm = _serviceProvider.GetRequiredService<PotionRecipeEditorForm>();
-            if (recipeEditorForm.ShowDialog() == DialogResult.OK) {
-                _ = LoadRecipes();
-            }
-            */
             using (var editorForm = new PotionRecipeEditorForm(_ingredientService, _recipeService, null)) {
                 if (editorForm.ShowDialog() == DialogResult.OK) {
-                    //_ = LoadRecipes();
                     LoadRecipes();
                 }
             }
@@ -58,15 +52,9 @@ namespace Potion_Brewery {
             if (dataGridView1.CurrentRow != null) {
                 int recipeId = (int)dataGridView1.CurrentRow.Cells["RecipeId"].Value;
                 PotionRecipe recipe = await _recipeService.GetPotionRecipe(recipeId);
-                /*
-                var recipeEditorForm = _serviceProvider.GetRequiredService<PotionRecipeEditorForm>();
-                */
                 using (var recipeEditorForm = new PotionRecipeEditorForm(_ingredientService, _recipeService, recipe)) {
 
-                    //recipeEditorForm.LoadRecipe(recipeId);
-                    //recipeEditorForm.LoadRecipe(recipe);
                     if (recipeEditorForm.ShowDialog() != DialogResult.OK) {
-                        //_ = LoadRecipes();
                         LoadRecipes();
                     }
                 }

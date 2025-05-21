@@ -19,7 +19,6 @@ namespace Potion_Brewery {
         public IngredientForm(IngredientService ingredientService) {
             InitializeComponent();
             _ingredientService = ingredientService;
-            //Load += IngredientForm_Load;
         }
 
         private async void BtnAdd_Click(object sender, EventArgs e) {

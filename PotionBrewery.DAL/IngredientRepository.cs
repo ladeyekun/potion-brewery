@@ -48,5 +48,11 @@ namespace PotionBrewery.DAL {
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<Ingredient>> GetMostUsedIngredients() {
+            return _context.Ingredients
+                .OrderByDescending(i => i.RecipeIngredients.Count)
+                .Take(5)
+                .ToList();
+        }
     }
 }
