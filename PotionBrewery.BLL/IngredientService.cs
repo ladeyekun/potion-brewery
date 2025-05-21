@@ -27,5 +27,15 @@ namespace PotionBrewery.BLL {
         public async Task DeleteIngredient(int id) {
             await _repository.DeleteIngredient(id);
         }
+
+        public async Task<int> GetTotalIngredientCount() {
+            List<Ingredient> ingredients = await _repository.GetIngredients();
+            return ingredients.Count(); 
+        }
+
+        public async Task<int> GetLowStockCount() {
+            List<Ingredient> ingredients = await _repository.GetIngredients();
+            return ingredients.Count(i => i.StockQuantity < i.MinThreshold);
+        }
     }
 }
