@@ -16,12 +16,11 @@ namespace Potion_Brewery {
         private readonly PotionRecipeService _recipeService;
         private readonly IngredientService _ingredientService;
         private readonly IServiceProvider _serviceProvider;
-        //public PotionRecipeForm(PotionRecipeService recipeService, IngredientService ingredientService, IServiceProvider serviceProvider) {
+
         public PotionRecipeForm(PotionRecipeService recipeService, IngredientService ingredientService) {
             InitializeComponent();
             _recipeService = recipeService;
             _ingredientService = ingredientService;
-            //_serviceProvider = serviceProvider;
         }
 
         private async void PotionRecipeForm_Load(object sender, EventArgs e) {
@@ -41,7 +40,7 @@ namespace Potion_Brewery {
         }
 
         private void AddRecipeBtn_Click(object sender, EventArgs e) {
-            using (var editorForm = new PotionRecipeEditorForm(_ingredientService, _recipeService, null)) {
+            using (PotionRecipeEditorForm editorForm = new PotionRecipeEditorForm(_ingredientService, _recipeService, null)) {
                 if (editorForm.ShowDialog() == DialogResult.OK) {
                     LoadRecipes();
                 }
@@ -52,7 +51,7 @@ namespace Potion_Brewery {
             if (dataGridView1.CurrentRow != null) {
                 int recipeId = (int)dataGridView1.CurrentRow.Cells["RecipeId"].Value;
                 PotionRecipe recipe = await _recipeService.GetPotionRecipe(recipeId);
-                using (var recipeEditorForm = new PotionRecipeEditorForm(_ingredientService, _recipeService, recipe)) {
+                using (PotionRecipeEditorForm recipeEditorForm = new PotionRecipeEditorForm(_ingredientService, _recipeService, recipe)) {
 
                     if (recipeEditorForm.ShowDialog() != DialogResult.OK) {
                         LoadRecipes();

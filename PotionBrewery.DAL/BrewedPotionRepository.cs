@@ -64,7 +64,7 @@ namespace PotionBrewery.DAL {
         }
 
         public async Task<int> GetTotalIngredientsUsed() {
-            var brewedPotion =  await _context.BrewedPotions
+            List<BrewedPotion> brewedPotion =  await _context.BrewedPotions
                 .Include(bp => bp.Recipe)
                 .ThenInclude(r => r.RecipeIngredients)
                 .ToListAsync();
